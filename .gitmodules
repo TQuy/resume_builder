@@ -1,0 +1,6 @@
+[submodule "frontend"]
+	path = frontend
+	url = ../resume_builder_reactjs_hook
+[submodule "backend"]
+	path = backend
+	url = ../resume_builder_django
