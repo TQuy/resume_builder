@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  django:
+    image: resume_builder_django
+    build: ./backend
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    networks:
+      resume_builder_network:
+        ipv4_address: "192.168.18.3"
+  react:
+    image: resume_builder_react_prod
+    build: 
+      context: ./frontend
+      target: production
+    networks:
+      resume_builder_network:
+        ipv4_address: "192.168.18.2"
+
+networks:
+  resume_builder_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.18.0/16"
