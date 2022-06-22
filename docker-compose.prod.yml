@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  django:
+    image: thequy/resume_builder_django:1.0
+    # build: ./backend
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    networks:
+      resume_builder_network:
+        ipv4_address: "192.168.18.3"
+  react:
+    image: thequy/resume_builder_reactjs_nginx:1.0
+    # build: 
+    #   context: ./frontend
+    #   target: production
+    networks:
+      resume_builder_network:
+        ipv4_address: "192.168.18.2"
+
+networks:
+  resume_builder_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.18.0/16"

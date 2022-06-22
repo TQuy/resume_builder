@@ -1,3 +1,11 @@
+# Resume_builder
+## Table of contents
+- [How to clone this project](#how-to-clone-this-project)
+- [Working with Django back-end](#working-with-django-back-end)
+- [Working with ReactJS front-end](#working-with-reactjs-front-end)
+- [Running with docker](#running-with-docker)
+
+
 ## How to clone this project
 1. Clone the project
     ```
@@ -56,10 +64,17 @@ To format python codes
 ```
 npm run prettier
 ```
-# Running with docker
+## Running with docker
+### From build context
 1. Install `docker` and `docker compose`
 1. run 
     ```
     docker compose up
     ```
 1. access the website via `http://192.168.18.2:81/`
+### From image registry
+Run
+```
+docker compose up -f docker-compose.prod.yml
+```
+To create and publish your own images, read `backend/README.md` and `frontend/README.md`.
