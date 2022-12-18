@@ -6,7 +6,7 @@ services:
     build: 
       context: ./backend
       dockerfile: ./docker/django/Dockerfile
-    command: gunicorn resume_builder.wsgi -b 0.0.0.0:${DJANGO_PORT}
+    command: gunicorn resume_builder.wsgi -w 2 -b 0.0.0.0:${DJANGO_PORT}
     networks:
       resume_builder_network:
         ipv4_address: 172.19.0.2
