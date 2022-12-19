@@ -8,8 +8,9 @@ services:
       dockerfile: ./docker/django/Dockerfile
     command: gunicorn resume_builder.wsgi -w 2 -b 0.0.0.0:${DJANGO_PORT}
     networks:
-      resume_builder_network:
-        ipv4_address: 172.19.0.2
+      - resume_builder_network
+      # resume_builder_network:
+      #   ipv4_address: 172.19.0.2
 
   backend_nginx:
     image: resume_builder_django_nginx
@@ -19,8 +20,9 @@ services:
     volumes:
       - ./backend/static:/static
     networks:
-      resume_builder_network:
-        ipv4_address: 172.19.0.3
+      - resume_builder_network
+      # resume_builder_network:
+      #   ipv4_address: 172.19.0.3
     depends_on:
       - backend
 
@@ -35,7 +37,7 @@ services:
 
 networks:
   resume_builder_network:
-    ipam:
-      driver: default
-      config:
-        - subnet: "172.19.0.0/16"
+    # ipam:
+    #   driver: default
+    #   config:
+    #     - subnet: "172.19.0.0/16"
