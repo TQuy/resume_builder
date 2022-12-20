@@ -2,10 +2,12 @@ version: '3.9'
 
 services:
   backend:
-    image: resume_builder_django
+    image: thequy/resume_builder_django:2.0
     build: 
       context: ./backend
       dockerfile: ./docker/django/Dockerfile
+    env_file:
+      - .env
     command: gunicorn resume_builder.wsgi -w ${GUNICORN_WORKER_COUNT} -b 0.0.0.0:${DJANGO_PORT}
     networks:
       - resume_builder_network
@@ -13,12 +15,12 @@ services:
       #   ipv4_address: 172.19.0.2
 
   backend_nginx:
-    image: resume_builder_django_nginx
+    image: thequy/resume_builder_django_nginx:1.0
     build: ./backend/docker/nginx
     ports: 
       - "${BACKEND_DJANGO_PORT}:${BACKEND_DJANGO_PORT}"
-    volumes:
-      - ./backend/static:/static
+    # volumes:
+    #   - ./backend/static:/static
     networks:
       - resume_builder_network
       # resume_builder_network:
