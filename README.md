@@ -83,18 +83,50 @@ npm run prettier
 ### From build context
 
 1. Install `docker` and `docker compose`
+1. Collect static for django admin interface first
+
+   ```
+   cd backend
+   python manage.py collectstatic
+   ```
+
+1. Make sure these parameters are matched
+   - `./.env` file
+   - `hostName` in `frontend/src/resume_builder/utils.js`,
+   - listening PORT in `frontend/nginx.conf`
+   - listening PORT in `backend/docker/nginx/nginx.conf`
+   - `proxy_pass` in `backend/docker/nginx/nginx.conf`
 1. Edit .env file
 1. run
+
    ```
-   docker compose up
+   docker compose up --build
    ```
+
+   **NOTES**:
+
+**TODO**:
+
+- Create template for `nginx.conf`
 
 ### From image registry
 
-Run
-
-```
-docker compose up -f docker-compose.prod.yml
-```
+1. Edit .env file. Below is the default params for the current images
+   ```
+   GUNICORN_WORKER_COUNT=2
+   DJANGO_PORT=8000
+   BACKEND_PORT=83
+   DEBUG=False
+   ALLOWED_HOSTS="*"
+   STATIC_URL=/static/
+   CSRF_ALLOWED_ORIGINS="http://localhost"
+   CORS_ALLOW_ALL_ORIGINS=True
+   REACT_APP_BACKEND_HOST="http://localhost:83"
+   FRONTEND_PORT=80
+   ```
+1. Run
+   ```
+   docker compose up -f docker-compose.prod.yml
+   ```
 
 To create and publish your own images, read `backend/README.md` and `frontend/README.md`.

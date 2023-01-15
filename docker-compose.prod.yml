@@ -18,5 +18,14 @@ services:
     depends_on:
       - backend
 
+  frontend:
+    image: thequy/resume_builder_reactjs_nginx:1.0
+    env_file:
+      - .env
+    ports:
+      - ${FRONTEND_PORT}:${FRONTEND_PORT}
+    networks:
+      - resume_builder_network
+
 networks:
   resume_builder_network:
