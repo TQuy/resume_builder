@@ -11,8 +11,12 @@ services:
 
   backend_nginx:
     image: thequy/resume_builder_django_nginx:1.0
+    volumes:
+      - ./backend/docker/nginx/templates:/etc/nginx/templates
     ports: 
-      - "${BACKEND_DJANGO_PORT}:${BACKEND_DJANGO_PORT}"
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
+    env_file:
+      - .env
     networks:
       - resume_builder_network
     depends_on:
@@ -20,8 +24,10 @@ services:
 
   frontend:
     image: thequy/resume_builder_reactjs_nginx:1.0
-    env_file:
-      - .env
+    environment:
+      - FRONTEND_PORT=${FRONTEND_PORT}
+    volumes:
+      - ./frontend/docker/nginx/templates:/etc/nginx/templates
     ports:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     networks:
