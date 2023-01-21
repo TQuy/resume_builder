@@ -30,9 +30,14 @@ services:
     image: thequy/resume_builder_reactjs_nginx:1.0
     build: 
       context: ./frontend
+      dockerfile: docker/Dockerfile
       target: production
-    env_file:
-      - .env
+      args:
+        - REACT_APP_BACKEND_HOST=${REACT_APP_BACKEND_HOST}
+    environment:
+      - FRONTEND_PORT=${FRONTEND_PORT}
+    volumes:
+      - ./frontend/docker/nginx/templates:/etc/nginx/templates
     ports:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     networks:
