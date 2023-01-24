@@ -5,7 +5,7 @@ services:
     image: thequy/resume_builder_django:2.0
     env_file:
       - .env
-    command: gunicorn resume_builder.wsgi -w ${GUNICORN_WORKER_COUNT} -b 0.0.0.0:${DJANGO_PORT}
+    command: gunicorn resume_builder.wsgi -w ${GUNICORN_WORKER_COUNT} -b 0.0.0.0:${DJANGO_PORT} --capture-output --access-logfile ./logs/gunicorn-access.log
     networks:
       - resume_builder_network
 
